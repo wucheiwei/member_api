@@ -4,12 +4,12 @@ class SessionsController < ApplicationController
         password = params[:password]
         hashed_password = Digest::SHA1.hexdigest(password)
     
-        User.where(username: username,password: hashed_password)
+        user = User.find_by(username: username, password: hashed_password)
         if user
-          session[:keep_login]= user.id
-          redirect_to root_path, notice: "登入成功"
+          session[:keep_login]= username
+          render json: {susses: true}
         else
-          redirect_to login_users_path, alert: "登入失敗"
+          render json: {susses: false}
         end
     
       end

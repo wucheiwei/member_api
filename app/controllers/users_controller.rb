@@ -1,14 +1,16 @@
 class UsersController < ApplicationController
-  
+    def index
+
+    end
     def create
       @user =User.new(user_params)
-  
+    
       if @user.save
-        redirect_to root_path, notice: "註冊成功"
-      #   format.json{render :show,}
+        render json: {susses: true}
       else
-        render :new
+        render json:{susses: false}
       end
+    
     end
     
     def login
@@ -16,6 +18,6 @@ class UsersController < ApplicationController
     end
     private
     def user_params
-      params.require(:users).permit(:username,:password)
+      params.require(:user).permit(:username,:password)
     end
 end
